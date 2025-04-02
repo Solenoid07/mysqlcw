@@ -1,47 +1,47 @@
-USE company_db;
+USE organizationDB;
 
 SELECT * FROM employees;
 
-SELECT department, COUNT(department) 
+SELECT dept_name, COUNT(dept_name) 
 FROM employees 
-WHERE department IN ('HR', 'Finance') 
-GROUP BY department;
+WHERE dept_name IN ('HR', 'Finance') 
+GROUP BY dept_name;
 
-SELECT column_name(s)
-FROM table_name
-WHERE condition
-GROUP BY column_name(s)
-HAVING condition
-ORDER BY column_name(s);
+SELECT column_list 
+FROM table_ref 
+WHERE filter_condition 
+GROUP BY column_list 
+HAVING group_condition 
+ORDER BY column_list;
 
-SELECT department, COUNT(department) AS dept_headcount
-FROM employees
-GROUP BY department
-HAVING COUNT(department) >= 4;
+SELECT dept_name, COUNT(dept_name) AS total_members 
+FROM employees 
+GROUP BY dept_name 
+HAVING COUNT(dept_name) >= 3;
 
-CREATE TABLE vit_main (
-    id INT PRIMARY KEY, 
-    name VARCHAR(30) NOT NULL,
-    faculty VARCHAR(30) NOT NULL
+CREATE TABLE university (
+  emp_id INT PRIMARY KEY, 
+  emp_name VARCHAR(30) NOT NULL, 
+  division VARCHAR(40) NOT NULL
 );
 
-INSERT INTO vit_main VALUES 
-(201, 'Rohan', 'CSE'), 
-(202, 'Neha', 'ECE');
+INSERT INTO university VALUES 
+(201, 'Rahul', 'Engineering'), 
+(202, 'Priya', 'Management');
 
-CREATE TABLE vit_regional (
-    id INT PRIMARY KEY, 
-    name VARCHAR(30) NOT NULL,
-    faculty VARCHAR(30) NOT NULL
+CREATE TABLE institute (
+  emp_id INT PRIMARY KEY, 
+  emp_name VARCHAR(30) NOT NULL, 
+  branch VARCHAR(40) NOT NULL
 );
 
-INSERT INTO vit_regional VALUES 
-(301, 'Amit', 'EEE'), 
-(302, 'Sneha', 'Mechanical');
+INSERT INTO institute VALUES 
+(201, 'Rahul', 'Bangalore'), 
+(202, 'Priya', 'Hyderabad');
 
-SELECT * FROM vit_main;
-SELECT * FROM vit_regional;
+SELECT * FROM institute;
+SELECT * FROM university;
 
-SELECT name AS "Star Performer" 
-FROM vit_main 
-WHERE id = (SELECT id FROM vit_regional WHERE faculty = 'CSE');
+SELECT emp_name AS AwardWinner 
+FROM university 
+WHERE emp_id = (SELECT emp_id FROM institute WHERE branch = 'Hyderabad');
