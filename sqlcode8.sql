@@ -1,47 +1,52 @@
-USE company_db;
+USE universityDB;
 
-SELECT * FROM employees;
-
-SELECT department, COUNT(department) 
-FROM employees 
-WHERE department IN ('HR', 'Finance') 
-GROUP BY department;
-
-SELECT column_name(s)
-FROM table_name
-WHERE condition
-GROUP BY column_name(s)
-HAVING condition
-ORDER BY column_name(s);
-
-SELECT department, COUNT(department) AS dept_headcount
-FROM employees
-GROUP BY department
-HAVING COUNT(department) >= 4;
-
-CREATE TABLE vit_main (
-    id INT PRIMARY KEY, 
-    name VARCHAR(30) NOT NULL,
-    faculty VARCHAR(30) NOT NULL
+CREATE TABLE learners (
+  student_id INT PRIMARY KEY,
+  student_name VARCHAR(30) NOT NULL,
+  department VARCHAR(30) NOT NULL
 );
 
-INSERT INTO vit_main VALUES 
-(201, 'Rohan', 'CSE'), 
-(202, 'Neha', 'ECE');
+INSERT INTO learners VALUES 
+(2001, 'Aryan', 'IT'), 
+(2002, 'Neha', 'IT'), 
+(2003, 'Rohan', 'IT');
 
-CREATE TABLE vit_regional (
-    id INT PRIMARY KEY, 
-    name VARCHAR(30) NOT NULL,
-    faculty VARCHAR(30) NOT NULL
+SELECT * FROM learners;
+
+CREATE TABLE academics (
+  student_id INT PRIMARY KEY,
+  cgpa VARCHAR(5) NOT NULL
 );
 
-INSERT INTO vit_regional VALUES 
-(301, 'Amit', 'EEE'), 
-(302, 'Sneha', 'Mechanical');
+INSERT INTO academics VALUES 
+(2001, '8.4'), 
+(2003, '8.7'), 
+(2006, '9.3');
 
-SELECT * FROM vit_main;
-SELECT * FROM vit_regional;
+SELECT * FROM academics;
 
-SELECT name AS "Star Performer" 
-FROM vit_main 
-WHERE id = (SELECT id FROM vit_regional WHERE faculty = 'CSE');
+USE universityDB;
+
+SELECT * FROM learners CROSS JOIN academics;
+
+SELECT * FROM learners 
+INNER JOIN academics 
+ON learners.student_id = academics.student_id;
+
+SELECT * FROM learners 
+NATURAL JOIN academics;
+
+SELECT * FROM learners 
+LEFT JOIN academics 
+ON learners.student_id = academics.student_id;
+
+SELECT * FROM learners 
+RIGHT JOIN academics 
+ON learners.student_id = academics.student_id;
+
+SELECT * FROM learners 
+FULL JOIN academics;
+
+SELECT * FROM learners 
+FULL OUTER JOIN academics 
+ON learners.student_id = academics.student_id;
