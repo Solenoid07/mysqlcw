@@ -1,0 +1,43 @@
+SHOW DATABASES;
+
+USE university_db;
+
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(25),
+    student_age INT
+);
+
+INSERT INTO students (student_id, student_name, student_age)
+VALUES 
+    (101, 'Amit', 18),
+    (102, 'Neha', 19),
+    (103, 'Raj', 17);
+
+CREATE TABLE courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(30)
+);
+
+SELECT * FROM courses;
+
+INSERT INTO courses (course_id, course_name)
+VALUES 
+    (201, 'Python'),
+    (202, 'Java'),
+    (203, 'Database Systems');
+
+CREATE TABLE enrollments (
+    student_id INT,
+    course_id INT,
+    enrollment_date DATE,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE CASCADE
+);
+
+INSERT INTO enrollments (student_id, course_id, enrollment_date)
+VALUES 
+    (102, 205, '2023-06-10');
+
+SELECT * FROM enrollments;
+DESC enrollments;
