@@ -1,0 +1,27 @@
+CREATE DATABASE Practicel;
+
+USE Practice1;
+
+CREATE TABLE Mech (
+    s_id INT,
+    s_name VARCHAR(25)
+);
+
+START TRANSACTION;
+
+INSERT INTO Mech VALUES (201, 'Aryan');
+SAVEPOINT A;
+
+UPDATE Mech SET s_id = 202 WHERE s_id = 201;
+SAVEPOINT B;
+
+INSERT INTO Mech VALUES (203, 'Rohan');
+SELECT * FROM Mech;
+
+SAVEPOINT C;
+SELECT * FROM Mech;
+
+ROLLBACK TO B;
+SELECT * FROM Mech;
+
+COMMIT;
