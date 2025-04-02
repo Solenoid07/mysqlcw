@@ -1,0 +1,51 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+public class CRUD_Test {
+    public static void main(String[] args) {
+        CRUD_Test objTest = new CRUD_Test();
+
+        objTest.createData(1, "Aryan", "aryan@gmail.com");
+        objTest.createData(2, "Neha", "neha@gmail.com");
+    }
+
+    public void createData(int id, String name, String email) {
+        Connection conn = getConnection();
+        PreparedStatement ps = null;
+
+        try {
+            if (conn != null) {
+                String query = "INSERT INTO users(id, name, email) VALUES (?, ?, ?)";
+                ps = conn.prepareStatement(query);
+                ps.setInt(1, id);
+                ps.setString(2, name);
+                ps.setString(3, email);
+
+                System.out.println("Executing: " + ps);
+                ps.executeUpdate();
+                System.out.println("Data inserted successfully!");
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception ex) {
+                System.out.println("Error closing resources: " + ex.getMessage());
+            }
+        }
+    }
+
+    public Connection getConnection() {
+        Connection conn = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/weekendDB", "root", "root");
+        } catch (Exception e) {
+            System.out.println("Connection error: " + e.getMessage());
+        }
+        return conn;
+    }
+}
